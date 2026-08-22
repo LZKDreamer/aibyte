@@ -1,0 +1,7 @@
+interface:
+  display_name: "AI 日报"
+  short_description: "生成经过来源研究的中文 AI 日报与公众号稿"
+  default_prompt: "使用 $ai-daily 生成今天的 AI 日报，并输出可直接发布的公众号文章。"
+
+policy:
+  allow_implicit_invocation: false

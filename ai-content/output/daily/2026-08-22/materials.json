@@ -1,0 +1,80 @@
+{
+  "date": "2026-08-22",
+  "items": [
+    {
+      "itemRank": 1,
+      "path": "assets/01.jpg",
+      "role": "illustration",
+      "content": "OpenAI Sol 事件组的视频封面，太阳主体对应 Sol。",
+      "videoUse": "讲到 Sol API 与积分价格下调时作为首条封面，缓慢推近。",
+      "videoAsset": "assets/videos/01-sol.mp4",
+      "source": "https://xbangdan.com/lanes/",
+      "reviewed": {
+        "relevant": true,
+        "clear": true
+      }
+    },
+    {
+      "itemRank": 3,
+      "path": "assets/03.jpg",
+      "role": "illustration",
+      "content": "Gemini 3.7 Flash 的 ARC-AGI-2 成绩图，对应首周增长及部署消息。",
+      "videoUse": "讲到 Gemini 3.7 Flash 时展示成绩图。",
+      "source": "https://xbangdan.com/lanes/",
+      "reviewed": {
+        "relevant": true,
+        "clear": true
+      }
+    },
+    {
+      "itemRank": 6,
+      "path": "assets/06.jpg",
+      "role": "illustration",
+      "content": "Claude Security 代码扫描界面，清晰显示 Claude Mythos 5。",
+      "videoUse": "讲到 Claude Security 公测与扫描能力时展示。",
+      "source": "https://xbangdan.com/lanes/",
+      "reviewed": {
+        "relevant": true,
+        "clear": true
+      }
+    },
+    {
+      "itemRank": 8,
+      "path": "assets/08.jpg",
+      "role": "illustration",
+      "content": "NVIDIA AVO 的 ARC-AGI-3 完成关卡图，对应 25 个游戏和 183 个关卡。",
+      "videoUse": "讲到 AVO 完成 ARC-AGI-3 时展示。",
+      "source": "https://xbangdan.com/lanes/",
+      "reviewed": {
+        "relevant": true,
+        "clear": true
+      }
+    },
+    {
+      "itemRank": 9,
+      "path": "assets/09.jpg",
+      "role": "illustration",
+      "content": "Runway Ruby 事件组的视频封面，用于 16-bit HDR 视频转换消息。",
+      "videoUse": "讲到 Ruby 支持 16-bit HDR 时展示视频封面。",
+      "videoAsset": "assets/videos/09-runway-ruby.mp4",
+      "source": "https://xbangdan.com/lanes/",
+      "reviewed": {
+        "relevant": true,
+        "clear": true
+      }
+    },
+    {
+      "itemRank": 12,
+      "path": "assets/12.jpg",
+      "role": "illustration",
+      "content": "ZCode Welcome Gift 画面，对应 GLM-5.3 新用户免费 token 活动。",
+      "videoUse": "讲到 ZCode 新用户赠送 1 亿 GLM-5.3 token 时展示。",
+      "source": "https://xbangdan.com/lanes/",
+      "reviewed": {
+        "relevant": true,
+        "clear": true
+      }
+    }
+  ],
+  "note": "只采用榜单事件组中与新闻直接相关且人工确认清晰的图片或视频封面；无合格图的条目保持纯文字。"
+}
