@@ -1,0 +1,33 @@
+{
+  "runtime": {
+    "relativeDependencyDirectory": "../../../ai-daily-output/ai-daily-bundle/dependency"
+  },
+  "dependencies": {
+    "agent-reach": {
+      "displayName": "Agent Reach",
+      "directory": "Agent-Reach",
+      "minimumPython": "3.10",
+      "minimumVersion": "1.5.0",
+      "install": {
+        "type": "github-archive",
+        "url": "https://github.com/Panniantong/Agent-Reach/archive/93ae1d18c37b707dec053c7c4f9d91cd8ef8943d.zip"
+      },
+      "officialInstall": "https://github.com/Panniantong/Agent-Reach/blob/main/docs/install.md",
+      "officialSkill": "https://raw.githubusercontent.com/Panniantong/Agent-Reach/93ae1d18c37b707dec053c7c4f9d91cd8ef8943d/agent_reach/skill/SKILL.md",
+      "capabilities": ["public-web", "rss", "youtube", "github", "platform-routing"]
+    },
+    "browser-harness": {
+      "displayName": "Browser Harness",
+      "directory": "browser-harness",
+      "minimumPython": "3.11",
+      "minimumVersion": "0.1.9",
+      "install": {
+        "type": "python-package",
+        "package": "browser-harness==0.1.9"
+      },
+      "officialInstall": "https://github.com/browser-use/browser-harness/blob/main/install.md",
+      "officialSkill": "https://raw.githubusercontent.com/browser-use/browser-harness/41108b8676d4bdb58b26ab3b079c0b7b0f8f3926/SKILL.md",
+      "capabilities": ["logged-in-chrome", "cdp", "interactive-browser"]
+    }
+  }
+}

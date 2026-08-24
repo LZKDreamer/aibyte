@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
+const skillDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const transcribe = path.join(skillDir, 'scripts', 'transcribe.py');
+const missingModel = spawnSync('D:\\software\\Python\\python.exe', [transcribe, 'missing.mp3', 'out.json'], { encoding: 'utf8', env: { ...process.env, AI_DAILY_VIDEO_WHISPER_MODEL: 'D:\\definitely-missing-model' } });
+assert.notEqual(missingModel.status, 0);
+assert.match(missingModel.stderr, /faster-whisper model not found/);
+const render = spawnSync(process.execPath, [path.join(skillDir, 'scripts', 'render.mjs'), 'article.md'], { encoding: 'utf8' });
+assert.notEqual(render.status, 0);
+assert.match(render.stderr, /Rendering is gated/);

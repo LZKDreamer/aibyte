@@ -16,9 +16,17 @@ pnpm-debug.log*
 playwright-report/
 test-results/
 blob-report/
-research-pipeline/output/
-research-pipeline/.x-login-chrome-profile/
-research-pipeline/.x-login-session/
+ai-content/ai-daily-output/
+ai-content/output/
+claude-video/
+ai-content/ai-daily-output/ai-daily-bundle/output/
+ai-content/ai-daily-output/ai-daily-bundle/dependency/ai-daily-pipeline/output/
+ai-content/ai-daily-output/ai-daily-bundle/dependency/ai-daily-pipeline/.x-login-chrome-profile/
+ai-content/ai-daily-output/ai-daily-bundle/dependency/ai-daily-pipeline/.x-login-session/
+ai-content/ai-daily-output/ai-daily-bundle/dependency/ai-daily-pipeline/node_modules/
+ai-content/ai-daily-output/ai-daily-bundle/dependency/ai-daily-video-runtime/node_modules/
+ai-content/ai-daily-output/ai-daily-bundle/dependency/browser-harness/
+ai-content/ai-daily-output/ai-daily-bundle/dependency/Agent-Reach/
 tmp/
 temp/
 
@@ -34,3 +42,5 @@ temp/
 Thumbs.db
 *.swp
 *.swo
+__pycache__/
+*.pyc

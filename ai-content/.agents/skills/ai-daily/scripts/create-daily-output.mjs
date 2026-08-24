@@ -1,10 +1,12 @@
 import { access, mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 const date = process.argv[2] || new Date().toISOString().slice(0, 10);
 if (!/^20\d{2}-\d{2}-\d{2}$/.test(date)) throw new Error("日期格式应为 YYYY-MM-DD。");
 
-const outputDir = path.resolve("output", "daily", date);
+const skillDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const outputDir = path.resolve(skillDir, "..", "..", "..", "..", "ai-daily-output", "ai-daily-bundle", "output", date, "01", "article");
 await mkdir(outputDir, { recursive: true });
 
 async function writeIfMissing(filename, content) {

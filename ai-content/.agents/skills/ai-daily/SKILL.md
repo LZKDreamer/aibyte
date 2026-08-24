@@ -9,9 +9,30 @@ description: "在用户明确调用 $ai-daily 时，基于 X 榜单赛道榜 24 
 
 X 榜单是选题、排序、文案密度和素材的**主标准**。主帖与榜单关联信源只用于补全、核对榜单卡片已有事件的具体事实和媒体；绝不用于替换榜单选题、重新排序或淘汰没有官网公告的热点，也不得自行扩展到官网、搜索引擎或其他外部来源重搜。AI 长文使用 `/articles/`，不属于本 Skill。
 
+## 依赖与按需采集
+
+依赖清单位于 `.agents/skills/ai-daily/config/web-dependencies.json`。普通日报启动时不要安装 Browser Harness 或 Agent Reach。
+
+- 榜单流水线和 Playwright 页面读取不需要这两个依赖。
+- 读取榜单列出的公开网页、RSS、YouTube、GitHub 或其他公开链接前，运行：
+
+  ```powershell
+  node .\.agents\skills\ai-daily\scripts\ensure-web-dependency.mjs agent-reach --json
+  ```
+
+- 需要复用已有 Chrome 登录态、CDP、点击、滚动或复杂 JS 交互时，运行：
+
+  ```powershell
+  node .\.agents\skills\ai-daily\scripts\ensure-web-dependency.mjs browser-harness --json
+  ```
+
+脚本优先复用满足版本要求的系统 CLI；缺失时使用 `uv` 或已安装的 `py`、`python`、`python3`，在 `ai-daily-output/ai-daily-bundle/dependency/` 创建本地虚拟环境。Agent Reach 使用依赖清单中的固定 GitHub archive URL，Browser Harness 使用固定 Python 包版本；不需要 Git，不执行全局安装器，也不自动配置 Cookie、代理、可选平台、云浏览器或录制。
+
+命令返回的 `command` 是本次应调用的 CLI，`skillPath` 是本次应读取的本地第三方 `SKILL.md`。先读取对应 `skillPath`，再按照其中的路由和命令工作。安装失败时停止当前采集并报告官方安装说明 URL。
+
 ## 固定流程
 
-1. 在 `D:\codeproject\aibyte\research-pipeline` 运行：
+1. 在 `ai-daily-output/ai-daily-bundle/dependency/ai-daily-pipeline` 运行：
 
    ```powershell
    node capture-xbangdan.mjs
@@ -20,7 +41,7 @@ X 榜单是选题、排序、文案密度和素材的**主标准**。主帖与�
    node build-daily-cover.mjs
    ```
 
-   读取 `output/daily-shortlist.json`，确认 `observedFilters` 包含 `24小时`、`综合热度`、`AI`。它按榜单页面顺序给出前 12 条，不混入其他来源的候选。
+   读取 `output/daily-shortlist.json`，确认 `observedFilters` 包含 `24小时`、`综合热度`、`AI`。它按榜单页面顺序给出前 12 条，不混入其他来源的候选。这里的 `output/` 是依赖流水线的中间工作目录，不是日报交付目录。
 
 2. 用 Playwright 完整读取榜单中每个入选条目的**事件组**，而不只读取候选文件中的短摘要。逐条记录和理解：`headline`、`summary`、主帖详情 `ltr-x`、展开的关联信源 `lev-m`、`related`、作者/时间/阅读/互动/热度等 `meta`，以及新闻媒体 `thumb`。X 榜单已完成信息收集、聚合与排序；日报必须以这些内容为主。
 
@@ -30,13 +51,23 @@ X 榜单是选题、排序、文案密度和素材的**主标准**。主帖与�
 
 5. 先检查每个事件组的 `thumb`，再决定配图，不得只核验第一条。普通 X 图片直接作为该条候选图；视频条目使用榜单提供的视频封面/缩略图作为日报配图，并尝试从**同一条 X 原帖**获取原视频的最高可用 MP4，保存到当天 `assets/videos/`、在 `materials.json` 与 `assets/materials.md` 登记。若原帖只提供不可稳定下载的分段流，要如实记录原因；不能把“只保存封面”写成已下载视频。日报网页仍使用视频封面，不嵌入播放器。头像不是新闻配图，不能采用。每张图都要人工判断：与该条内容直接相关、主体清楚、文字可辨且无大面积空白时才采用；没有 `thumb` 或无合格图时保持纯文字。图片和视频封面不能独立证明事实，登记为 `illustration`。
 
-6. 在 `ai-content` 创建当天输出目录：
+6. 在 `ai-content` 创建当天日报交付目录：
 
    ```powershell
-   node .\scripts\create-daily-output.mjs YYYY-MM-DD
+   node .\.agents\skills\ai-daily\scripts\create-daily-output.mjs YYYY-MM-DD
    ```
 
+   文件会写入 `ai-daily-output/ai-daily-bundle/output/YYYY-MM-DD/01/article/`。该目录保存 `article.md`、`wechat.html`、`sources.json`、`materials.json` 和文章素材。
+
 7. 正文完成后，读取 `references/humanizer-daily.md` 做最后一遍编辑。它只调整句子、节奏和空话，不能改变榜单排序、数字、产品名或 X 榜单事实。
+
+## 目录与依赖
+
+- `ai-daily-output/ai-daily-bundle/output/YYYY-MM-DD/01/article/`：本 Skill 的日报交付文件。
+- `ai-daily-output/ai-daily-bundle/dependency/ai-daily-pipeline/`：榜单采集、候选构建、日报排序和封面生成脚本，以及 Playwright 依赖、登录会话和中间抓取结果。
+- `ai-daily-output/ai-daily-bundle/dependency/browser-harness/`：Browser Harness 的项目内 Python 虚拟环境和缓存说明；需要登录态交互时使用其中 `.venv` 的 CLI。
+- `ai-daily-output/ai-daily-bundle/dependency/Agent-Reach/`：Agent Reach 的项目内 Python 虚拟环境和缓存说明；公开网页、RSS、视频字幕和平台路由优先使用其中 `.venv` 的 CLI。
+- `.agents/skills/ai-daily/references/` 与 `.agents/skills/ai-daily/scripts/`：本 Skill 的规则、素材登记、校验和日报目录初始化脚本。
 
 ## 单条测试与素材操作
 
